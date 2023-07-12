@@ -1,6 +1,5 @@
 import typer
 
-
 from settings import settings
 
 
