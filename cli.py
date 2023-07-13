@@ -2,7 +2,6 @@ import typer
 
 from settings import settings
 
-
 app = typer.Typer()
 
 
