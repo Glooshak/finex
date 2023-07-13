@@ -35,9 +35,11 @@ class BaseApi:
     def __init__(
             self,
             base_url: str,
+            request_timeout: int = 5 * 60,
     ) -> None:
 
         self.base_url = base_url
+        self.request_timeout = request_timeout
 
     def _parse_model(
             self,
