@@ -64,9 +64,9 @@ class BaseApi:
     @cached_property
     def headers(self) -> dict[str, Any]:
         headers = {
-            "content-type": self.body_type.value,
-            "accept": self.accept.value,
-            "user-agent": settings.CLIENT_USER_AGENT,
+            'content-type': self.body_type.value,
+            'accept': self.accept.value,
+            'user-agent': settings.CLIENT_USER_AGENT,
         }
 
         if self.header_params is not None:
@@ -87,26 +87,26 @@ class BaseApi:
     def add_query_params(self, **kwargs) -> Self:
 
         self._parse_model(
-            annot_name="query_params",
-            cached_key="params",
+            annot_name='query_params',
+            cached_key='params',
             **kwargs,
         )
 
         return self
 
     def add_header_params(self, **kwargs) -> Self:
-        self._parse_model(annot_name="header_params", cached_key="headers", **kwargs)
+        self._parse_model(annot_name='header_params', cached_key='headers', **kwargs)
         return self
 
     def add_security(self, **kwargs):
-        self._parse_model(annot_name="security", cached_key="auth", **kwargs)
+        self._parse_model(annot_name='security', cached_key='auth', **kwargs)
         for key, val in self.auth.items():
             self.add_header(key, val)
         return self
 
     @cached_property
     def full_url(self) -> str:
-        _url = f"{self.base_url}{self.url}"
+        _url = f'{self.base_url}{self.url}'
         if self.url_params is None:
             return _url
         return _url.format(**self.url_params.dict())
@@ -130,5 +130,5 @@ class BaseApi:
     def parse_response(self, resp: str | bytes) -> BaseModel | None:
 
         if self.has_response:
-            return parse_raw_as(self.__annotations__["response"], resp)
+            return parse_raw_as(self.__annotations__['response'], resp)
         return None
