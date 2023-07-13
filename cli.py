@@ -6,7 +6,7 @@ app = typer.Typer()
 
 
 def validate_currencies(value: str) -> str:
-    allowed_currencies = settings.allowed_currencies
+    allowed_currencies = settings.ALLOWED_CURRENCIES
     if value not in allowed_currencies:
         raise typer.BadParameter(f'Only {"; ".join(allowed_currencies)} are allowed')
     return value
