@@ -17,6 +17,9 @@ pydantic = "1.10.11"
 pytest = "^7.4.0"
 mypy = "^1.4.1"
 ruff = "^0.0.278"
+ipython = "^8.14.0"
+isort = "^5.12.0"
+black = "^23.7.0"
 
 [tool.ruff]
 # Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.
@@ -57,6 +60,13 @@ line-length = 88
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 target-version = "py311"
+
+[tool.black]
+skip-string-normalization = true
+
+[tool.isort]
+profile = 'pycharm'
+include_trailing_comma = true
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,8 +1,16 @@
 from enum import Enum
-from typing import Any, Self
 from functools import cached_property
+from typing import (
+    Any,
+    Self,
+)
 
-from pydantic import BaseModel, parse_raw_as, parse_obj_as
+from pydantic import (
+    BaseModel,
+    Field,
+    parse_obj_as,
+    parse_raw_as,
+)
 
 from settings import settings
 
@@ -12,6 +20,14 @@ class ContentType(Enum):
     X_WWW_FORM_URLENCODED = 'application/x-www-form-urlencoded'
     FORM_DATA = None
     TEXT = 'text/plain'
+
+
+class BaseFinexApiHeaders(BaseModel):
+    user_agent: str = Field(
+        settings.CLIENT_USER_AGENT,
+        alias='user-agent',
+    )
+    host: str = Field(settings.FINEX_API_HOST)
 
 
 class BaseApi:

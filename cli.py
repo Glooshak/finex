@@ -2,6 +2,7 @@ import typer
 
 from settings import settings
 
+
 app = typer.Typer()
 
 
@@ -35,7 +36,7 @@ def configs() -> None:
     Show cli settings
     """
     message = typer.style(
-        settings.model_dump(),
+        settings.dict(),
         fg=typer.colors.YELLOW,
         bold=True,
     )
