@@ -15,11 +15,7 @@ pydantic = "1.10.11"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
-mypy = "^1.4.1"
-ruff = "^0.0.278"
 ipython = "^8.14.0"
-isort = "^5.12.0"
-black = "^23.7.0"
 
 [tool.ruff]
 # Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.
@@ -56,17 +52,19 @@ exclude = [
 ]
 per-file-ignores = {}
 # Same as Black.
-line-length = 88
+line-length = 79
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 target-version = "py311"
 
 [tool.black]
 skip-string-normalization = true
+line-length = 79
 
 [tool.isort]
-profile = 'pycharm'
+profile = 'black'
 include_trailing_comma = true
+line_length = 79
 
 [build-system]
 requires = ["poetry-core"]

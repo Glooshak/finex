@@ -32,7 +32,8 @@ async def make_http_request(
             if resp.status not in api.success_statuses:
                 txt = await resp.content.read(read_body_on_error)
                 raise RequestError(
-                    f'Request fail {api.__class__}, {txt=}, status_code={resp.status}'
+                    f'Request fail {api.__class__}, {txt=},'
+                    f' status_code={resp.status}'
                 )
 
             if not api.has_response:

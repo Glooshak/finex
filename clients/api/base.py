@@ -1,16 +1,8 @@
 from enum import Enum
 from functools import cached_property
-from typing import (
-    Any,
-    Self,
-)
+from typing import Any, Self
 
-from pydantic import (
-    BaseModel,
-    Field,
-    parse_obj_as,
-    parse_raw_as,
-)
+from pydantic import BaseModel, Field, parse_obj_as, parse_raw_as
 
 from settings import settings
 
@@ -41,7 +33,14 @@ class BaseApi:
 
     has_response: bool = True
     response: Any
-    success_statuses: tuple[int, ...] = (200, 201, 203)
+    success_statuses: tuple[
+        int,
+        ...,
+    ] = (
+        200,
+        201,
+        203,
+    )
 
     base_url: str
     url: str
@@ -63,7 +62,11 @@ class BaseApi:
         **kwargs,
     ) -> None:
         if model is not None:
-            setattr(self, annot_name, model)
+            setattr(
+                self,
+                annot_name,
+                model,
+            )
         else:
             setattr(
                 self,
@@ -77,7 +80,9 @@ class BaseApi:
             del self.__dict__[cached_key]
 
     @cached_property
-    def headers(self) -> dict[str, Any]:
+    def headers(
+        self,
+    ) -> dict[str, Any,]:
         headers = {
             'content-type': self.body_type.value,
             'accept': self.accept.value,
@@ -85,20 +90,36 @@ class BaseApi:
         }
 
         if self.header_params is not None:
-            _headers = self.header_params.dict(exclude_none=True, by_alias=True)
-            for key, val in _headers.items():
+            _headers = self.header_params.dict(
+                exclude_none=True,
+                by_alias=True,
+            )
+            for (
+                key,
+                val,
+            ) in _headers.items():
                 headers[key.lower()] = val
             if self.auth:
-                for key, val in self.auth.items():
+                for (
+                    key,
+                    val,
+                ) in self.auth.items():
                     headers[key.lower()] = val
 
         return headers
 
-    def add_header(self, key: str, value: str | list[str]) -> Self:
+    def add_header(
+        self,
+        key: str,
+        value: str | list[str],
+    ) -> Self:
         self.headers[key.lower()] = value
         return self
 
-    def add_query_params(self, **kwargs) -> Self:
+    def add_query_params(
+        self,
+        **kwargs,
+    ) -> Self:
         self._parse_model(
             annot_name='query_params',
             cached_key='params',
@@ -107,38 +128,76 @@ class BaseApi:
 
         return self
 
-    def add_header_params(self, **kwargs) -> Self:
-        self._parse_model(annot_name='header_params', cached_key='headers', **kwargs)
+    def add_header_params(
+        self,
+        **kwargs,
+    ) -> Self:
+        self._parse_model(
+            annot_name='header_params',
+            cached_key='headers',
+            **kwargs,
+        )
         return self
 
-    def add_security(self, **kwargs):
-        self._parse_model(annot_name='security', cached_key='auth', **kwargs)
-        for key, val in self.auth.items():
-            self.add_header(key, val)
+    def add_security(
+        self,
+        **kwargs,
+    ):
+        self._parse_model(
+            annot_name='security',
+            cached_key='auth',
+            **kwargs,
+        )
+        for (
+            key,
+            val,
+        ) in self.auth.items():
+            self.add_header(
+                key,
+                val,
+            )
         return self
 
     @cached_property
-    def full_url(self) -> str:
+    def full_url(
+        self,
+    ) -> str:
         _url = f'{self.base_url}{self.url}'
         if self.url_params is None:
             return _url
         return _url.format(**self.url_params.dict())
 
     @cached_property
-    def params(self):
+    def params(
+        self,
+    ):
         if not self.query_params:
             return None
 
-        return self.query_params.dict(exclude_none=True, by_alias=True)
+        return self.query_params.dict(
+            exclude_none=True,
+            by_alias=True,
+        )
 
     @cached_property
-    def auth(self):
+    def auth(
+        self,
+    ):
         if not self.security:
             return None
 
-        return self.security.dict(exclude_none=True, by_alias=True)
+        return self.security.dict(
+            exclude_none=True,
+            by_alias=True,
+        )
 
-    def parse_response(self, resp: str | bytes) -> BaseModel | None:
+    def parse_response(
+        self,
+        resp: str | bytes,
+    ) -> BaseModel | None:
         if self.has_response:
-            return parse_raw_as(self.__annotations__['response'], resp)
+            return parse_raw_as(
+                self.__annotations__['response'],
+                resp,
+            )
         return None

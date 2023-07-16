@@ -3,7 +3,6 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-
 CURRENCIES_NAME = Literal[
     'EUR',
     'GBP',
@@ -23,7 +22,10 @@ class CurrencyInfo(BaseModel):
 
 class CurrencyResponse(BaseModel):
     date: date
-    rates: dict[CURRENCIES_NAME, CurrencyInfo]
+    rates: dict[
+        CURRENCIES_NAME,
+        CurrencyInfo,
+    ]
 
 
 class FondInfo(BaseModel):

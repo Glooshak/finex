@@ -1,9 +1,6 @@
 from pydantic import BaseModel
 
-from .base import (
-    BaseApi,
-    BaseFinexApiHeaders,
-)
+from .base import BaseApi, BaseFinexApiHeaders
 from .schemas import FondsResponse
 
 

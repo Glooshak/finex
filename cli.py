@@ -3,14 +3,17 @@ from rich import print
 
 from settings import settings
 
-
 app = typer.Typer()
 
 
-def validate_currencies(value: str) -> str:
+def validate_currencies(
+    value: str,
+) -> str:
     allowed_currencies = settings.ALLOWED_CURRENCIES
     if value not in allowed_currencies:
-        raise typer.BadParameter(f'Only {"; ".join(allowed_currencies)} are allowed')
+        raise typer.BadParameter(
+            f'Only {"; ".join(allowed_currencies)} are allowed'
+        )
     return value
 
 

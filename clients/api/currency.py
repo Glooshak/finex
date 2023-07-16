@@ -1,7 +1,4 @@
-from .base import (
-    BaseApi,
-    BaseFinexApiHeaders,
-)
+from .base import BaseApi, BaseFinexApiHeaders
 from .schemas import CurrencyResponse
 
 
