@@ -1,4 +1,5 @@
 import typer
+from rich import print
 
 from settings import settings
 
@@ -35,12 +36,7 @@ def configs() -> None:
     """
     Show cli settings
     """
-    message = typer.style(
-        settings.dict(),
-        fg=typer.colors.YELLOW,
-        bold=True,
-    )
-    typer.echo(message)
+    print(settings.dict())
 
 
 if __name__ == '__main__':
