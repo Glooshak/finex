@@ -1,6 +1,6 @@
 from .portfolio import PortfolioClient
 
 
-__all___ = [
+__all__ = (
     'PortfolioClient',
-]
+)
