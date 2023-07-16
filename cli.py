@@ -1,9 +1,10 @@
 import typer
 from rich import print
 
+from async_typer import AsyncTyper
 from settings import settings
 
-app = typer.Typer()
+app = AsyncTyper()
 
 
 def validate_currencies(
@@ -17,8 +18,8 @@ def validate_currencies(
     return value
 
 
-@app.command()
-def assets(
+@app.async_command()
+async def assets(
     currency: str = typer.Option(
         'rub',
         callback=validate_currencies,
