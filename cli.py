@@ -15,11 +15,11 @@ def validate_currencies(value: str) -> str:
 
 @app.command()
 def assets(
-        currency: str = typer.Option(
-            'rub',
-            callback=validate_currencies,
-            help='Currency of assets',
-        )
+    currency: str = typer.Option(
+        'rub',
+        callback=validate_currencies,
+        help='Currency of assets',
+    )
 ) -> None:
     """
     Showing your FinEx assets in different currencies.

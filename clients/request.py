@@ -13,10 +13,9 @@ class RequestError(Exception):
 
 
 async def make_http_request(
-        api: BaseApi,
-        read_body_on_error: int = 1024,
+    api: BaseApi,
+    read_body_on_error: int = 1024,
 ) -> BaseModel | None:
-
     _request_kwargs = {
         'method': api.method,
         'url': api.full_url,
