@@ -197,7 +197,7 @@ class BaseApi:
     ) -> BaseModel | None:
         if self.has_response:
             return parse_raw_as(
-                self.__annotations__['response'],
+                self.response,
                 resp,
             )
         return None
