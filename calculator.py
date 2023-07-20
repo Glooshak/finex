@@ -17,13 +17,13 @@ class Currency(Enum):
 
 
 class TableRow(BaseModel):
-    row: list[str]
+    row: list[str | float]
 
 
 class StatisticTable(BaseModel):
     heads: list[str] = Field(['Fond Name', 'Fond Price', 'Quantity', 'Total'])
-    final_row: Optional[list[str]] = Field(['All founds', '', '', ''])
     body: list[TableRow]
+    final_row: Optional[list[str]] = Field(['All founds', '', '', ''])
 
 
 class Calculator:
@@ -31,6 +31,7 @@ class Calculator:
         self,
         portfolio_client: PortfolioClient,
         currency: Currency = Currency.RUB,
+        # fonds: list[str],
     ) -> None:
         self._cur_type = currency
         self._portfolio_client = portfolio_client
@@ -51,4 +52,5 @@ class Calculator:
             self._portfolio_client.get_fonds(),
             self._portfolio_client.get_currencies(),
         )
+
         return  # type: ignore
