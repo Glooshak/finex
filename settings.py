@@ -1,6 +1,10 @@
-from typing import Any
+from typing import Any, NewType
 
 from pydantic import BaseSettings, root_validator
+
+Ticker = NewType('Ticker', str)
+Amount = NewType('Amount', int)
+UserTickers = dict[Ticker, Amount]
 
 
 class Settings(BaseSettings):
@@ -11,7 +15,7 @@ class Settings(BaseSettings):
     FINEX_API_HOST: str = 'api.finex-etf.ru'
     FINEX_API_BASE_URL: str = 'https://api.finex-etf.ru'
     # Fonds
-    FONDS: dict[str, int] | None = None
+    FONDS: UserTickers = {}
     FXBC: int = 0
     FXCN: int = 0
     FXDE: int = 0
@@ -45,7 +49,7 @@ class Settings(BaseSettings):
             if value == 0:
                 continue
 
-            fonds[key] = value
+            fonds[Ticker(key)] = Amount(value)
 
         values['FONDS'] = fonds
         return values

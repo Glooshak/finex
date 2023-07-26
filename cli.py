@@ -1,6 +1,7 @@
 import typer
 from rich import print
 from rich.console import Console
+from rich.table import Table
 
 from async_typer import AsyncTyper
 from calculator import Calculator, Currency, StatisticTable
@@ -35,13 +36,21 @@ async def assets(
     Showing your FinEx assets in different currencies.
     You are able to choose currencies with option --currency.
     By default --currency==rub.
-    Available currencies: rub, usd.
+    Available currencies: rub, usd, eur.
     """
 
-    _: StatisticTable = await Calculator(
+    st_table: StatisticTable = await Calculator(
         PortfolioClient(settings.FINEX_API_BASE_URL),
         currency=Currency(currency),
-    ).get_table()
+    ).get_table(settings.FONDS)
+
+    table = Table(*st_table.heads)
+    if st_table.body is not None:
+        for row in st_table.body:
+            table.add_row(*[str(element) for element in row.dict().values()])
+            table.add_section()
+    table.add_row(*[str(element) for element in st_table.final_row])
+    console.print(table)
 
 
 @app.async_command()
